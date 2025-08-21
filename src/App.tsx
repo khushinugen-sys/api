@@ -1,24 +1,32 @@
-const App = () => {
-  const getData = async () => {
-    try {
-      const response = await fetch("https://fakestoreapi.com/products");
-      const data = await response.json();
-      console.log(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
+'use client';
+
+import fetchTime from './hooks/fetchTime';
+
+const TimeClockComponent = () => {
+  const {data,error,loading}=fetchTime()
+  console.log(data)
+  console.log(error)
+  
+  // useEffect(() => {
+  //   fetchTimeClock();
+  // }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!data || data.length === 0) {
+    return <div>No time clock data available.</div>;
+  }
+
 
   return (
     <div>
-      <button
-        onClick={() => {
-          getData;
-        }}
-      >
-        Click me
-      </button> 
+      <h1>Time Clock Data</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 };
-export default App;
+
+export default TimeClockComponent;
+
